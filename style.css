@@ -48,32 +48,42 @@ body {
 .system-overlay::before { top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
 .system-overlay::after { bottom: -5px; right: -5px; border-left: 0; border-top: 0; }
 
+/* HEADER REALIGNMENT: FORCE BUTTONS TO RIGHT SIDE */
 .hud-header {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Better alignment for small buttons */
+    align-items: center;
     border-bottom: 2px solid var(--glass-border);
     padding-bottom: 10px;
     margin-bottom: 15px;
+    width: 100%;
 }
 
-.hud-header {
+.header-text-unit {
     display: flex;
-    justify-content: space-between;
-    align-items: center; /* Better alignment for small buttons */
-    border-bottom: 2px solid var(--glass-border);
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+    flex-direction: column;
 }
 
-/* COMPACT NAV BUTTONS */
+.day-info { 
+    font-size: 1.5rem; 
+    letter-spacing: 5px; 
+    text-shadow: 0 0 10px var(--system-blue); 
+    line-height: 1.2;
+}
+
+#real-time-clock { 
+    color: var(--system-blue); 
+    opacity: 0.7; 
+    font-size: 0.8rem; 
+    letter-spacing: 2px; 
+}
+
+/* COMPACT NAV BUTTONS REALIGNED */
 .nav-buttons {
     display: flex;
-    gap: 8px; /* Prevents touching */
+    gap: 8px;
+    margin-left: auto; /* Pushes buttons to the right edge */
 }
-
-.day-info { font-size: 1.5rem; letter-spacing: 5px; text-shadow: 0 0 10px var(--system-blue); }
-#real-time-clock { color: var(--system-blue); opacity: 0.7; font-size: 0.8rem; letter-spacing: 2px; }
 
 .main-interface {
     display: grid;
@@ -155,7 +165,7 @@ body {
     animation: neonPulse 2s infinite ease-in-out;
 }
 
-/* NEON STRIKE LINE 1 (::before) */
+/* NEON STRIKE (X) */
 .day-cell.cleared::before {
     content: '';
     position: absolute;
@@ -167,7 +177,6 @@ body {
     z-index: 2;
 }
 
-/* NEON STRIKE LINE 2 (::after) */
 .day-cell.cleared::after {
     content: '';
     position: absolute;
@@ -179,13 +188,11 @@ body {
     z-index: 2;
 }
 
-/* PULSE ANIMATION */
 @keyframes neonPulse {
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.8; transform: scale(1.02); }
 }
 
-/* ACTIVE TARGET HIGHLIGHT */
 .day-cell.today {
     border: 2px solid var(--system-blue);
     background: rgba(0, 238, 255, 0.1);
@@ -202,8 +209,8 @@ body {
     border: 1px solid var(--system-blue);
     color: var(--system-blue);
     font-family: 'Orbitron';
-    font-size: 0.6rem; /* Smaller for high-tech feel */
-    padding: 4px 10px; /* Compact padding */
+    font-size: 0.6rem;
+    padding: 4px 10px;
     cursor: pointer;
     text-transform: uppercase;
     transition: 0.3s;
@@ -214,10 +221,11 @@ body {
 .system-btn.danger { border-color: var(--system-red); color: var(--system-red); margin-top: auto; }
 .system-btn.danger:hover { background: var(--system-red); color: white; box-shadow: 0 0 20px var(--system-red); }
 
+/* MOBILE RESPONSIVE TWEAKS */
 @media (max-width: 850px) {
     .system-overlay {
-        height: auto; /* Allows natural flow on small screens */
-        padding: 15px;
+        height: auto;
+        padding: 12px;
         overflow-y: auto;
     }
 
@@ -227,18 +235,28 @@ body {
     }
 
     .hud-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .nav-buttons {
-        width: 100%;
-        justify-content: flex-end; /* Keeps them neat in the corner */
+        flex-direction: row; /* FORCE SIDE-BY-SIDE ON MOBILE */
+        justify-content: space-between;
+        align-items: center;
+        gap: 5px;
     }
 
     .day-info {
-        font-size: 1.1rem; /* Scaled down for mobile */
+        font-size: 1rem; /* Smaller to make room for buttons */
         letter-spacing: 2px;
+    }
+
+    #real-time-clock {
+        font-size: 0.6rem;
+    }
+
+    .nav-buttons {
+        width: auto;
+        justify-content: flex-end;
+    }
+
+    .system-btn {
+        font-size: 0.55rem;
+        padding: 4px 8px;
     }
 }
