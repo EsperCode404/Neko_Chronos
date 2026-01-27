@@ -3,6 +3,7 @@
     --system-red: #ff4444;
     --panel-bg: rgba(5, 15, 25, 0.85);
     --glass-border: rgba(0, 238, 255, 0.2);
+    --bar-glow: rgba(0, 238, 255, 0.4);
 }
 
 body {
@@ -91,7 +92,7 @@ body {
     gap: 30px;
 }
 
-/* SIDEBAR GLASS CARDS */
+/* SIDEBAR GLASS CARDS - UPDATED FOR BREAKTHROUGH STYLE */
 .stats-sidebar {
     display: flex;
     flex-direction: column;
@@ -99,17 +100,121 @@ body {
 }
 
 .stat-box { 
-    background: rgba(0, 238, 255, 0.05); 
-    padding: 15px; 
-    border: 1px solid var(--glass-border);
-    clip-path: polygon(0 0, 90% 0, 100% 20%, 100% 100%, 10% 100%, 0 80%);
+    background: linear-gradient(135deg, rgba(0, 238, 255, 0.05) 0%, rgba(0, 10, 20, 0.8) 100%);
+    padding: 18px; 
+    border-left: 2px solid var(--system-blue); /* Primary Power Line */
+    border-right: 1px solid rgba(0, 238, 255, 0.1);
+    
+    /* Aggressive Cyberpunk Cut: Angled Top-Right and Bottom-Left */
+    clip-path: polygon(0 0, 85% 0, 100% 20%, 100% 100%, 15% 100%, 0 80%);
+    
+    position: relative;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: 0.4s ease;
 }
 
-.stat-label { font-size: 0.6rem; color: var(--system-blue); margin-bottom: 8px; opacity: 0.8; }
+.stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 20%;
+    width: 30px;
+    height: 4px;
+    background: var(--system-blue);
+    clip-path: polygon(20% 0, 100% 0, 80% 100%, 0% 100%);
+    opacity: 0.6;
+}
+
+.stat-box:hover {
+    background: rgba(0, 238, 255, 0.08);
+    transform: translateX(5px);
+    border-left: 4px solid var(--system-blue);
+}
+
+.stat-label { 
+    font-size: 0.6rem; 
+    color: var(--system-blue); 
+    margin-bottom: 12px; 
+    opacity: 0.8; 
+    display: flex; 
+    justify-content: space-between;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 900;
+}
+
+.stat-label::after {
+    content: attr(data-percent);
+    color: #fff;
+    text-shadow: 0 0 10px var(--system-blue);
+    opacity: 1;
+}
+
 .stat-value { font-size: 1.3rem; font-weight: bold; letter-spacing: 1px; }
 
-.mini-bar { width: 100%; height: 2px; background: rgba(255,255,255,0.05); margin-top: 10px; position: relative; }
-.fill { height: 100%; background: var(--system-blue); width: 0%; box-shadow: 0 0 10px var(--system-blue); transition: 1s cubic-bezier(0.4, 0, 0.2, 1); }
+/* --- BREAKTHROUGH STYLE PROGRESS BARS --- */
+.mini-bar { 
+    width: 100%; 
+    height: 2px; 
+    background: rgba(255, 255, 255, 0.05); 
+    margin-top: 15px; 
+    position: relative;
+}
+
+/* THE PRECISION FILL */
+.fill {
+    height: 100%;
+    background: #fff; /* White core for high intensity */
+    box-shadow: 0 0 10px var(--system-blue), 0 0 2px #fff;
+    position: relative;
+}
+
+/* LEFT BRACKET - CYBERPUNK SEGMENT */
+.mini-bar::before {
+    content: '';
+    position: absolute;
+    left: -2px; top: -4px;
+    width: 2px; height: 10px;
+    background: var(--system-blue);
+}
+
+/* RIGHT BRACKET - THE "TARGET" */
+.mini-bar::after {
+    content: '';
+    position: absolute;
+    right: -12px;
+    top: -6px;
+    width: 6px;
+    height: 14px;
+    border-right: 2px solid rgba(0, 238, 255, 0.3);
+}
+
+/* THE MOVING DATA-SLIDER (THE SKEWED HEAD) */
+.fill::after {
+    content: '';
+    position: absolute;
+    right: -4px; /* Centers the dot on the edge */
+    top: -3px;   /* Vertical alignment for 2px bar */
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%; /* Makes it a dot */
+    box-shadow: 
+        0 0 10px #fff, 
+        0 0 20px var(--system-blue);
+    z-index: 2;
+}
+
+@keyframes dotPulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.fill::after {
+    animation: dotPulse 2s infinite ease-in-out;
+}
 
 .calendar-container {
     background: rgba(0, 0, 0, 0.2);
@@ -235,14 +340,14 @@ body {
     }
 
     .hud-header {
-        flex-direction: row; /* FORCE SIDE-BY-SIDE ON MOBILE */
+        flex-direction: row; 
         justify-content: space-between;
         align-items: center;
         gap: 5px;
     }
 
     .day-info {
-        font-size: 1rem; /* Smaller to make room for buttons */
+        font-size: 1rem; 
         letter-spacing: 2px;
     }
 
