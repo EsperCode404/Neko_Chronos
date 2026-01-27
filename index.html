@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEKO-CHRONOS v1.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="system-overlay">
+        <div class="hud-header">
+            <div class="day-info-wrapper">
+                <div class="day-info">
+                    <span id="current-month-display">JANUARY</span>
+                    <span id="current-year-display">2026</span>
+                </div>
+                <div id="real-time-clock">00:00:00</div>
+            </div>
+            <div class="nav-controls">
+                <button onclick="changeMonth(-1)" class="system-btn">PREV</button>
+                <button onclick="changeMonth(1)" class="system-btn">NEXT</button>
+            </div>
+        </div>
+
+        <div class="main-interface">
+            <div class="stats-sidebar">
+                <div class="stat-box">
+                    <div class="stat-label">MONTHLY UPTIME</div>
+                    <div class="stat-value" id="month-ratio">0/31</div>
+                    <div class="mini-bar"><div id="month-bar" class="fill"></div></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">YEARLY ASCENSION</div>
+                    <div class="stat-value" id="year-ratio">0/365</div>
+                    <div class="mini-bar"><div id="year-bar" class="fill"></div></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">CURRENT STREAK</div>
+                    <div class="stat-value" id="streak-count">0 DAYS</div>
+                </div>
+                <button id="factory-reset" class="system-btn danger" onclick="confirmReset()">FACTORY RESET</button>
+            </div>
+
+            <div class="calendar-container">
+                <div class="weekday-header">
+                    <span>SUN</span><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span>
+                </div>
+                <div id="calendar-grid" class="grid"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
