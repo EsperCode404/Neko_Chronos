@@ -81,11 +81,9 @@ function updateStats() {
     const month = currentDisplayDate.getMonth() + 1;
     const daysInMonth = new Date(year, month, 0).getDate();
     
-    // Monthly Calculation (e.g., 28/31)
     let monthCleared = 0;
     const monthPrefix = `${year}-${String(month).padStart(2, '0')}`;
     
-    // Yearly Calculation (e.g., 28/365)
     let yearCleared = 0;
     const yearPrefix = `${year}-`;
 
@@ -94,33 +92,72 @@ function updateStats() {
         if (key.startsWith(yearPrefix)) yearCleared++;
     });
 
-    // Update UI Elements
+    // --- FIX: UPDATE MONTHLY UI & PERCENTAGE ---
+    const monthPerc = Math.round((monthCleared / daysInMonth) * 100);
     document.getElementById('month-ratio').textContent = `${monthCleared}/${daysInMonth}`;
-    document.getElementById('month-bar').style.width = `${(monthCleared / daysInMonth) * 100}%`;
+    document.getElementById('month-bar').style.width = `${monthPerc}%`;
+    // This updates the floating % number in your CSS
+    document.querySelector('.stat-box:nth-child(1) .stat-label').setAttribute('data-percent', `${monthPerc}%`);
     
+    // --- FIX: UPDATE YEARLY UI & PERCENTAGE ---
     const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
     const daysInYear = isLeap ? 366 : 365;
+    const yearPerc = Math.round((yearCleared / daysInYear) * 100);
     document.getElementById('year-ratio').textContent = `${yearCleared}/${daysInYear}`;
-    document.getElementById('year-bar').style.width = `${(yearCleared / daysInYear) * 100}%`;
+    document.getElementById('year-bar').style.width = `${yearPerc}%`;
+    document.querySelector('.stat-box:nth-child(2) .stat-label').setAttribute('data-percent', `${yearPerc}%`);
 
-    // Calculate Streak
     calculateStreak();
 }
 
 function calculateStreak() {
     let streak = 0;
-    let checkDate = new Date();
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let checkDate = new Date(today);
+
+    const getBtnKey = (d) => {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${day}`;
+    };
+
+    // 1. IF TODAY IS MARKED: Start counting from today backwards.
+    // 2. IF TODAY IS NOT MARKED: Start counting from yesterday backwards.
+    // This handles the "I haven't finished today's task yet" grace period.
     
+    let todayKey = getBtnKey(checkDate);
+    if (!historyData[todayKey]) {
+        checkDate.setDate(checkDate.getDate() - 1);
+    }
+
+    // 3. THE CHAIN VERIFICATION
     while (true) {
-        const key = checkDate.toISOString().split('T')[0];
+        let key = getBtnKey(checkDate);
         if (historyData[key]) {
             streak++;
             checkDate.setDate(checkDate.getDate() - 1);
         } else {
-            break;
+            break; // THE CHAIN ENDS HERE
         }
     }
-    document.getElementById('streak-count').textContent = `${streak} DAYS`;
+
+    // 4. HUD SYNC
+    const streakElement = document.getElementById('streak-count');
+    if (streakElement) {
+        streakElement.textContent = `${streak} DAYS`;
+        
+        // SYSTEM ALERT: Glow Red at 0, Blue when Active
+        if (streak > 0) {
+            streakElement.style.color = "var(--system-blue)";
+            streakElement.style.textShadow = "0 0 15px var(--system-blue)";
+        } else {
+            streakElement.style.color = "var(--system-red)";
+            streakElement.style.textShadow = "0 0 5px var(--system-red)";
+        }
+    }
 }
 
 // --- NAVIGATION MODULE ---
