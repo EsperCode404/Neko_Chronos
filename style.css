@@ -58,16 +58,14 @@ body {
 }
 
 .header-text-unit { display: flex; flex-direction: column; }
-.day-info { font-size: 1.5rem; letter-spacing: 5px; text-shadow: 0 0 10px var(--system-blue); line-height: 1.2; }
-
-/* THE UPDATED CLOCK - BOLD & BRIGHT */
+.day-info { font-size: 1.5rem; letter-spacing: 5px; font-weight: 900; text-shadow: 0 0 10px var(--system-blue); line-height: 1.2; }
 #real-time-clock { 
-    color: #ffffff; 
-    font-weight: 900;
-    font-size: 0.9rem;
-    opacity: 1;
+    color: #ff9900;            /* 1. CHANGE COLOR HERE (Hex code) */
+    font-weight: 900;          /* 2. MAKES DIGITS BOLD */
+    font-size: 0.9rem;         /* 3. SLIGHTLY LARGER */
+    opacity: 1;                /* 4. FULL BRIGHTNESS (No transparency) */
     letter-spacing: 2px; 
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* 5. ADDS GLOW */
 }
 
 .nav-buttons { display: flex; gap: 8px; margin-left: auto; }
@@ -92,7 +90,6 @@ body {
 }
 
 /* BREAKTHROUGH BUTTON STYLING (The 3rd Box) */
-/* HIGH-CLASS CYBERPUNK BUTTON */
 .stat-box.breakthrough-link {
     cursor: pointer;
     text-decoration: none;
@@ -100,64 +97,62 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #fff;
-    background: rgba(0, 238, 255, 0.05);
-    border: 1px solid var(--system-blue);
     position: relative;
-    padding: 15px;
+    padding: 20px;
     margin-top: 10px;
-    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.1) 0%, rgba(20, 5, 5, 0.9) 100%);
+    border: 1px solid var(--system-red);
+    /* PHYSICAL HARDWARE SHAPE */
+    clip-path: polygon(0% 15%, 15% 0%, 100% 0%, 100% 85%, 85% 100%, 0% 100%);
+    box-shadow: inset 0 0 15px rgba(255, 68, 68, 0.2);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     overflow: hidden;
 }
 
-/* THE GLITCH SCANNER EFFECT */
-.stat-box.breakthrough-link::before {
-    content: "LINKING...";
+/* CORNER BRACKET DECORATION */
+.stat-box.breakthrough-link::after {
+    content: '';
     position: absolute;
     top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: linear-gradient(transparent 0%, rgba(0, 238, 255, 0.2) 50%, transparent 100%);
-    background-size: 100% 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.5rem;
-    color: var(--system-blue);
-    opacity: 0;
-    transition: 0.3s;
+    width: 15px; height: 15px;
+    border-top: 2px solid var(--system-red);
+    border-left: 2px solid var(--system-red);
+    pointer-events: none;
+}
+
+/* ENERGY SWEEP ANIMATION */
+.stat-box.breakthrough-link::before {
+    content: '';
+    position: absolute;
+    width: 200%; height: 50%;
+    background: linear-gradient(rgba(255, 68, 68, 0.1), transparent);
+    top: -100%;
+    transform: rotate(-45deg);
+    transition: 0.6s;
 }
 
 .stat-box.breakthrough-link:hover {
-    background: rgba(0, 238, 255, 0.15);
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 0 20px rgba(0, 238, 255, 0.3), inset 0 0 10px rgba(0, 238, 255, 0.2);
+    background: rgba(255, 68, 68, 0.2);
+    box-shadow: 0 0 30px rgba(255, 68, 68, 0.3), inset 0 0 20px rgba(255, 68, 68, 0.2);
+    transform: translateY(-2px);
     border-color: #fff;
 }
 
-.stat-box.breakthrough-link:hover::before {
-    opacity: 1;
-    animation: scanLine 1s linear infinite;
-}
+.stat-box.breakthrough-link:hover::before { top: 150%; }
 
-/* THE BUTTON TEXT */
 .stat-box.breakthrough-link .stat-label {
-    margin-bottom: 5px;
     color: var(--system-red);
     text-shadow: 0 0 5px var(--system-red);
+    letter-spacing: 3px;
+    margin-bottom: 5px;
     font-weight: 900;
 }
 
 .stat-box.breakthrough-link .stat-value {
-    font-size: 1.1rem;
-    letter-spacing: 3px;
+    font-size: 1.15rem;
     color: #fff;
-    text-shadow: 0 0 10px var(--system-red), 0 0 20px var(--system-red);
-}
-
-@keyframes scanLine {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(100%); }
+    text-shadow: 0 0 15px var(--system-red);
+    transition: 0.3s;
 }
 
 .stat-label { 
