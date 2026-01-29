@@ -54,5 +54,18 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <div id="custom-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">SYSTEM WARNING</div>
+        <div class="modal-body">
+            THIS ACTION WILL PERMANENTLY ERASE YOUR 2026 TIMELINE. <br>
+            <span class="danger-text">DO YOU WISH TO PROCEED?</span>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeModal()" class="modal-btn">CANCEL</button>
+            <button onclick="executeReset()" class="modal-btn danger">CONFIRM</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

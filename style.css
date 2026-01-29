@@ -326,3 +326,68 @@ body {
     .day-info { font-size: 1.2rem; }
     #real-time-clock { font-size: 0.85rem; }
 }
+
+/* MODAL OVERLAY */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+/* MODAL BOX */
+.modal-content {
+    background: var(--panel-bg);
+    border: 1px solid var(--system-red);
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    clip-path: polygon(0% 10%, 10% 0%, 100% 0%, 100% 90%, 90% 100%, 0% 100%);
+    box-shadow: 0 0 30px rgba(255, 68, 68, 0.2);
+    text-align: center;
+}
+
+.modal-header {
+    color: var(--system-red);
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px var(--system-red);
+}
+
+.modal-body {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.danger-text { color: var(--system-red); font-weight: bold; }
+
+.modal-footer { display: flex; gap: 10px; justify-content: center; }
+
+.modal-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--system-blue);
+    color: var(--system-blue);
+    padding: 8px 20px;
+    font-family: 'Orbitron';
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modal-btn.danger {
+    border-color: var(--system-red);
+    color: var(--system-red);
+}
+
+.modal-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px currentColor;
+}
