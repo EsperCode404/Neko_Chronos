@@ -272,30 +272,68 @@ body {
 .system-btn.danger { border-color: var(--system-red); color: var(--system-red); margin-top: auto; }
 
 /* MOBILE CONSOLIDATION */
-@media (max-width: 850px) {
+/* --- MIRROR SIMULATOR VIEWPORT PROTOCOL --- */
+@media (max-width: 600px) {
     .system-overlay {
-        width: 100%; height: 100vh;
-        min-height: -webkit-fill-available;
-        padding: 8px; margin: 0; border: none;
-        overflow: hidden;
+        padding: 10px;
+        height: auto; /* Allow natural flow like the simulator */
+        overflow-y: auto; 
     }
 
-    .main-interface { display: flex; flex-direction: column; gap: 8px; height: calc(100% - 80px); }
+    .main-interface {
+        display: flex;
+        flex-direction: column; /* Force vertical stacking as seen in 1st image */
+        gap: 12px;
+    }
 
-    .stats-sidebar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex-shrink: 0; }
+    .stats-sidebar {
+        display: flex;
+        flex-direction: column; /* Match the vertical stack of the 1st image */
+        gap: 10px;
+    }
 
-    .stat-box { margin-bottom: 0; padding: 8px 12px; min-height: 85px; }
-    .stat-box.breakthrough-link { grid-column: span 2; min-height: 70px; }
+    .stat-box {
+        width: 100%;
+        margin-bottom: 0;
+        padding: 12px 15px; /* Restoring the height of the 1st image */
+        min-height: 80px; 
+        box-sizing: border-box;
+    }
 
-    .calendar-container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
-    .grid { gap: 4px; flex-grow: 1; }
-    .day-cell { aspect-ratio: 1; font-size: 0.75rem; }
+    /* THE BREAKTHROUGH BUTTON - STACKED VIEW */
+    .stat-box.breakthrough-link {
+        display: flex;
+        flex-direction: column; /* Stack text like the simulator */
+        align-items: center;
+        text-align: center;
+        padding: 15px;
+        min-height: 90px;
+        clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+    }
 
-    .hud-header { flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
-    .day-info { font-size: 1.1rem; letter-spacing: 2px; }
-}
+    /* CALENDAR CONTAINER */
+    .calendar-container {
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--glass-border);
+    }
 
-@media (max-width: 380px) {
-    .stats-sidebar { grid-template-columns: 1fr; }
-    .stat-box.breakthrough-link { grid-column: span 1; }
+    .grid {
+        gap: 8px; /* Balanced spacing for real touchscreens */
+    }
+
+    .day-cell {
+        aspect-ratio: 1;
+        font-size: 0.85rem;
+    }
+
+    /* HEADER ADJUSTMENTS */
+    .hud-header {
+        flex-direction: row; /* Keep header elements horizontal */
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .day-info { font-size: 1.2rem; }
+    #real-time-clock { font-size: 0.85rem; }
 }
