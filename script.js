@@ -147,17 +147,14 @@ function changeMonth(offset) {
     updateStats();
 }
 
-// INITIALIZE MODAL DISPLAY
 function confirmReset() {
     document.getElementById('custom-modal').style.display = 'flex';
 }
 
-// EXIT WITHOUT CHANGES
 function closeModal() {
     document.getElementById('custom-modal').style.display = 'none';
 }
 
-// EXECUTE DATA PURGE (CORE LOGIC)
 function executeReset() {
     historyData = {}; 
     localStorage.removeItem('NEKO_CHRONOS_DATA');     
