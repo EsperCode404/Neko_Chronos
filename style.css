@@ -22,7 +22,6 @@ body {
     min-height: -webkit-fill-available;
 }
 
-/* SYSTEM OVERLAY */
 .system-overlay {
     width: 100%;
     max-width: 1000px;
@@ -60,12 +59,12 @@ body {
 .header-text-unit { display: flex; flex-direction: column; }
 .day-info { font-size: 1.5rem; letter-spacing: 5px; font-weight: 900; text-shadow: 0 0 10px var(--system-blue); line-height: 1.2; }
 #real-time-clock { 
-    color: #ff9900;            /* 1. CHANGE COLOR HERE (Hex code) */
-    font-weight: 900;          /* 2. MAKES DIGITS BOLD */
-    font-size: 0.9rem;         /* 3. SLIGHTLY LARGER */
-    opacity: 1;                /* 4. FULL BRIGHTNESS (No transparency) */
+    color: #ff9900;            
+    font-weight: 900;         
+    font-size: 0.9rem;         
+    opacity: 1;                
     letter-spacing: 2px; 
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* 5. ADDS GLOW */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .nav-buttons { display: flex; gap: 8px; margin-left: auto; }
@@ -89,7 +88,6 @@ body {
     transition: 0.3s ease;
 }
 
-/* BREAKTHROUGH BUTTON STYLING (The 3rd Box) */
 .stat-box.breakthrough-link {
     cursor: pointer;
     text-decoration: none;
@@ -102,14 +100,12 @@ body {
     margin-top: 10px;
     background: linear-gradient(135deg, rgba(255, 68, 68, 0.1) 0%, rgba(20, 5, 5, 0.9) 100%);
     border: 1px solid var(--system-red);
-    /* PHYSICAL HARDWARE SHAPE */
     clip-path: polygon(0% 15%, 15% 0%, 100% 0%, 100% 85%, 85% 100%, 0% 100%);
     box-shadow: inset 0 0 15px rgba(255, 68, 68, 0.2);
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     overflow: hidden;
 }
 
-/* CORNER BRACKET DECORATION */
 .stat-box.breakthrough-link::after {
     content: '';
     position: absolute;
@@ -120,7 +116,6 @@ body {
     pointer-events: none;
 }
 
-/* ENERGY SWEEP ANIMATION */
 .stat-box.breakthrough-link::before {
     content: '';
     position: absolute;
@@ -189,7 +184,6 @@ body {
     50% { transform: scale(1.4); opacity: 0.7; }
 }
 
-/* CALENDAR SECTION */
 .calendar-container {
     background: rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -271,39 +265,36 @@ body {
 }
 .system-btn.danger { border-color: var(--system-red); color: var(--system-red); margin-top: auto; }
 
-/* MOBILE CONSOLIDATION */
-/* --- MIRROR SIMULATOR VIEWPORT PROTOCOL --- */
 @media (max-width: 600px) {
     .system-overlay {
         padding: 10px;
-        height: auto; /* Allow natural flow like the simulator */
+        height: auto;
         overflow-y: auto; 
     }
 
     .main-interface {
         display: flex;
-        flex-direction: column; /* Force vertical stacking as seen in 1st image */
+        flex-direction: column;
         gap: 12px;
     }
 
     .stats-sidebar {
         display: flex;
-        flex-direction: column; /* Match the vertical stack of the 1st image */
+        flex-direction: column;
         gap: 10px;
     }
 
     .stat-box {
         width: 100%;
         margin-bottom: 0;
-        padding: 12px 15px; /* Restoring the height of the 1st image */
-        min-height: 80px; 
+        padding: 12px 15px;
+        min-height: 80px;
         box-sizing: border-box;
     }
 
-    /* THE BREAKTHROUGH BUTTON - STACKED VIEW */
     .stat-box.breakthrough-link {
         display: flex;
-        flex-direction: column; /* Stack text like the simulator */
+        flex-direction: column;
         align-items: center;
         text-align: center;
         padding: 15px;
@@ -311,7 +302,6 @@ body {
         clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
     }
 
-    /* CALENDAR CONTAINER */
     .calendar-container {
         padding: 15px;
         background: rgba(0, 0, 0, 0.3);
@@ -319,7 +309,7 @@ body {
     }
 
     .grid {
-        gap: 8px; /* Balanced spacing for real touchscreens */
+        gap: 8px;
     }
 
     .day-cell {
@@ -327,9 +317,8 @@ body {
         font-size: 0.85rem;
     }
 
-    /* HEADER ADJUSTMENTS */
     .hud-header {
-        flex-direction: row; /* Keep header elements horizontal */
+        flex-direction: row;
         justify-content: space-between;
         align-items: center;
     }
