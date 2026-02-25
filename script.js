@@ -57,9 +57,11 @@ for (let day = 1; day <= daysInMonth; day++) {
 function toggleDay(dateKey, element) {
     if (historyData[dateKey]) {
         delete historyData[dateKey];
+        removeXP();
         element.classList.remove('cleared');
     } else {
         historyData[dateKey] = true;
+        addXP();
         element.classList.add('cleared');
     }
     
@@ -162,4 +164,70 @@ function executeReset() {
     updateStats(); 
     closeModal();
     console.log("SYSTEM PURGE COMPLETE. TIMELINE RESET.");
+    localStorage.removeItem("NEKO_CHRONOS_LEVEL_DATA");
+    currentLevel = 0;
+    currentXP = 0;
+    totalXP = 0;
+    updateLevelDisplay();
 }
+
+let currentLevel = 0;
+let currentXP = 0;
+let totalXP = 0;
+
+function initializeLevelSystem() {
+    const savedData = localStorage.getItem('NEKO_CHRONOS_LEVEL_DATA');
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        currentLevel = data.level || 0;
+        currentXP = data.xp || 0;
+        totalXP = data.totalXP || 0;
+    }
+    updateLevelDisplay();
+}
+
+function updateLevelDisplay() {
+    document.querySelector('.level-value').textContent = currentLevel;
+    document.getElementById('level-bar').style.width = `${currentXP}%`;
+}
+
+function addXP() {
+    currentXP += 10;
+    totalXP += 10;
+    
+    if (currentXP >= 100) {
+        currentXP = currentXP - 100;
+        currentLevel += 1;
+    }
+    
+    saveLevelData();
+    updateLevelDisplay();
+}
+
+function removeXP() {
+    currentXP -= 10;
+    totalXP -= 10;
+    
+    if (currentXP < 0 && currentLevel > 0) {
+        currentLevel -= 1;
+        currentXP = 90;
+    } else if (currentXP < 0) {
+        currentXP = 0;
+    }
+    
+    saveLevelData();
+    updateLevelDisplay();
+}
+
+function saveLevelData() {
+    const levelData = {
+        level: currentLevel,
+        xp: currentXP,
+        totalXP: totalXP
+    };
+    localStorage.setItem('NEKO_CHRONOS_LEVEL_DATA', JSON.stringify(levelData));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeLevelSystem();
+});

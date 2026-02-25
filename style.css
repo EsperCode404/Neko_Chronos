@@ -402,3 +402,85 @@ body {
     transform: scale(0.95);
     filter: brightness(1.2);
 }
+
+.level-container {
+    margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.1) 0%, rgba(20, 5, 5, 0.9) 100%);
+    border: 1px solid var(--system-red);
+    clip-path: polygon(0% 15%, 15% 0%, 100% 0%, 100% 70%, 90% 100%, 0% 100%, 0% 30%);
+    box-shadow: 0 0 30px rgba(255, 68, 68, 0.2), inset 0 0 15px rgba(255, 68, 68, 0.2);
+}
+
+.level-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.level-label {
+    color: var(--system-red);
+    text-shadow: 0 0 5px var(--system-red);
+    letter-spacing: 3px;
+    font-weight: 900;
+    font-size: 0.6rem;
+}
+
+.level-value {
+    color: #fff;
+    text-shadow: 0 0 15px var(--system-red);
+    font-size: 1.28rem;
+    font-weight: bold;
+}
+
+#factory-reset {
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.15) 0%, rgba(139, 0, 0, 0.8) 100%);
+    border: 2px solid var(--system-red);
+    color: var(--system-red);
+    text-shadow: 0 0 8px rgba(255, 68, 68, 0.8);
+    font-weight: 900;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0% 10%, 10% 0%, 100% 0%, 100% 90%, 90% 100%, 0% 100%);
+    transition: all 0.3s ease;
+    padding-left: 30px;
+}
+#factory-reset::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border-top: 2px solid var(--system-red);
+    border-left: 2px solid var(--system-red);
+    pointer-events: none;
+}
+
+
+#factory-reset:hover {
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.3) 0%, rgba(139, 0, 0, 0.9) 100%);
+    border-color: #fff;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(255, 68, 68, 0.5), inset 0 0 20px rgba(255, 68, 68, 0.3);
+}
+
+#factory-reset:hover::after {
+    top: 150%;
+}
+
+#factory-reset:active {
+    transform: scale(0.96) translateY(0);
+    background: rgba(255, 68, 68, 0.5);
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.warning-icon {
+    color: var(--system-red);
+}

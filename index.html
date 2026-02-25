@@ -42,7 +42,14 @@
     <div class="stat-value">BREAKTHROUGH</div>
     <div style="font-size: 0.5rem; color: var(--system-red); margin-top: 5px; letter-spacing: 1px;">STATUS: ACTIVE [v1.7]</div>
 </a>
-                <button id="factory-reset" class="system-btn danger" onclick="confirmReset()">FACTORY RESET</button>
+                <div class="level-container">
+                    <div class="level-info">
+                        <span class="level-label">LEVEL</span>
+                        <span class="level-value">0</span>
+                    </div>
+                    <div class="mini-bar"><div id="level-bar" class="fill"></div></div>
+                </div>
+                <button id="factory-reset" class="system-btn danger" onclick="confirmReset()"><span class="warning-icon">⚠</span> FACTORY RESET</button>
             </div>
 
             <div class="calendar-container">
