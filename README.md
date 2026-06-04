@@ -11,7 +11,7 @@ NEKO-CHRONOS is a highly stylized, mobile-responsive discipline engine engineere
 ### Breakthrough Control Console
 The main operating matrix displays tracking arrays, level indicators, and localized calendar progression grids optimized for strict mobile viewport deployment:
 
-![NEKO-CHRONOS Interface Telemetry](./assets/1.png)
+![NEKO-CHRONOS Interface Telemetry](./assets/01.jpeg)
 
 ---
 
