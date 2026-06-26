@@ -18,11 +18,11 @@ function renderCalendar() {
     const grid = document.getElementById('calendar-grid');
     const monthLabel = document.getElementById('current-month-display');
     const yearLabel = document.getElementById('current-year-display');
-    
+
     grid.innerHTML = '';
     const year = currentDisplayDate.getFullYear();
     const month = currentDisplayDate.getMonth();
-    
+
     monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(currentDisplayDate).toUpperCase();
     yearLabel.textContent = year;
 
@@ -36,22 +36,22 @@ function renderCalendar() {
         grid.appendChild(empty);
     }
 
-for (let day = 1; day <= daysInMonth; day++) {
-    const cell = document.createElement('div');
-    cell.classList.add('day-cell');
-    
-    cell.innerHTML = `<span class="day-num">${day}</span><span class="cross-alt"></span>`;
-    
-    const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    if (historyData[dateKey]) cell.classList.add('cleared');
-    
-    if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-        cell.classList.add('today');
-    }
+    for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement('div');
+        cell.classList.add('day-cell');
 
-    cell.onclick = () => toggleDay(dateKey, cell);
-    grid.appendChild(cell);
-}
+        cell.innerHTML = `<span class="day-num">${day}</span><span class="cross-alt"></span>`;
+
+        const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        if (historyData[dateKey]) cell.classList.add('cleared');
+
+        if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            cell.classList.add('today');
+        }
+
+        cell.onclick = () => toggleDay(dateKey, cell);
+        grid.appendChild(cell);
+    }
 }
 
 function toggleDay(dateKey, element) {
@@ -64,7 +64,7 @@ function toggleDay(dateKey, element) {
         addXP();
         element.classList.add('cleared');
     }
-    
+
     localStorage.setItem('NEKO_CHRONOS_DATA', JSON.stringify(historyData));
     updateStats();
 }
@@ -73,10 +73,10 @@ function updateStats() {
     const year = currentDisplayDate.getFullYear();
     const month = currentDisplayDate.getMonth() + 1;
     const daysInMonth = new Date(year, month, 0).getDate();
-    
+
     let monthCleared = 0;
     const monthPrefix = `${year}-${String(month).padStart(2, '0')}`;
-    
+
     let yearCleared = 0;
     const yearPrefix = `${year}-`;
 
@@ -89,7 +89,7 @@ function updateStats() {
     document.getElementById('month-ratio').textContent = `${monthCleared}/${daysInMonth}`;
     document.getElementById('month-bar').style.width = `${monthPerc}%`;
     document.querySelector('.stat-box:nth-child(1) .stat-label').setAttribute('data-percent', `${monthPerc}%`);
-    
+
     const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
     const daysInYear = isLeap ? 366 : 365;
     const yearPerc = Math.round((yearCleared / daysInYear) * 100);
@@ -113,7 +113,7 @@ function calculateStreak() {
         const day = String(d.getDate()).padStart(2, '0');
         return `${y}-${m}-${day}`;
     };
-    
+
     let todayKey = getBtnKey(checkDate);
     if (!historyData[todayKey]) {
         checkDate.setDate(checkDate.getDate() - 1);
@@ -132,7 +132,7 @@ function calculateStreak() {
     const streakElement = document.getElementById('streak-count');
     if (streakElement) {
         streakElement.textContent = `${streak} DAYS`;
-        
+
         if (streak > 0) {
             streakElement.style.color = "var(--system-blue)";
             streakElement.style.textShadow = "0 0 15px var(--system-blue)";
@@ -158,10 +158,10 @@ function closeModal() {
 }
 
 function executeReset() {
-    historyData = {}; 
-    localStorage.removeItem('NEKO_CHRONOS_DATA');     
-    renderCalendar(); 
-    updateStats(); 
+    historyData = {};
+    localStorage.removeItem('NEKO_CHRONOS_DATA');
+    renderCalendar();
+    updateStats();
     closeModal();
     console.log("SYSTEM PURGE COMPLETE. TIMELINE RESET.");
     localStorage.removeItem("NEKO_CHRONOS_LEVEL_DATA");
@@ -171,8 +171,12 @@ function executeReset() {
     updateLevelDisplay();
 }
 
+// ==========================================================================
+// RECALIBRATED HARDWARE PROTOCOL: 7-DAY WEEKLY ASCENSION CYCLE
+// LEVEL 1 = EXACTLY 7 SUCCESSFUL MARKS
+// ==========================================================================
 let currentLevel = 0;
-let currentXP = 0;
+let currentXP = 0; // Stored as a clean number from 0 to 6 (representing progress items)
 let totalXP = 0;
 
 function initializeLevelSystem() {
@@ -182,39 +186,48 @@ function initializeLevelSystem() {
         currentLevel = data.level || 0;
         currentXP = data.xp || 0;
         totalXP = data.totalXP || 0;
+
+        // CORRECTION BACKWARD COMPLIANCE: If loading old 10-base data, safely downscale it to 7-base
+        if (currentXP > 6) {
+            currentXP = Math.floor((currentXP / 100) * 7);
+            if (currentXP > 6) currentXP = 0;
+        }
     }
     updateLevelDisplay();
 }
 
 function updateLevelDisplay() {
     document.querySelector('.level-value').textContent = currentLevel;
-    document.getElementById('level-bar').style.width = `${currentXP}%`;
+    // Calculate progress percentage accurately based on 7 increments: (currentXP / 7) * 100
+    const progressPercent = Math.min(100, Math.round((currentXP / 7) * 100));
+    document.getElementById('level-bar').style.width = `${progressPercent}%`;
 }
 
 function addXP() {
-    currentXP += 10;
-    totalXP += 10;
-    
-    if (currentXP >= 100) {
-        currentXP = currentXP - 100;
-        currentLevel += 1;
+    currentXP += 1; // Increment by 1 milestone unit out of 7
+    totalXP += 1;
+
+    if (currentXP >= 7) {
+        currentXP = 0; // Reset step counter
+        currentLevel += 1; // Level Up
     }
-    
+
     saveLevelData();
     updateLevelDisplay();
 }
 
 function removeXP() {
-    currentXP -= 10;
-    totalXP -= 10;
-    
+    currentXP -= 1;
+    totalXP -= 1;
+
     if (currentXP < 0 && currentLevel > 0) {
         currentLevel -= 1;
-        currentXP = 90;
+        currentXP = 6; // Revert back to peak of previous level (6/7)
     } else if (currentXP < 0) {
         currentXP = 0;
     }
-    
+    if (totalXP < 0) totalXP = 0;
+
     saveLevelData();
     updateLevelDisplay();
 }
@@ -228,6 +241,6 @@ function saveLevelData() {
     localStorage.setItem('NEKO_CHRONOS_LEVEL_DATA', JSON.stringify(levelData));
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeLevelSystem();
 });
